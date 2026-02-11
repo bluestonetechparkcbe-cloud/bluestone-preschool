@@ -1,0 +1,61 @@
+Analyzing bluestone_preschool...                                
+
+   info - The private field _basePath could be 'final' - lib\core\utils\image_constant.dart:4:17 - prefer_final_fields
+   info - The constant name 'FIGMA_DESIGN_WIDTH' isn't a lowerCamelCase identifier - lib\core\utils\size_utils.dart:4:11 - constant_identifier_names
+   info - The constant name 'FIGMA_DESIGN_HEIGHT' isn't a lowerCamelCase identifier - lib\core\utils\size_utils.dart:5:11 - constant_identifier_names
+   info - The constant name 'FIGMA_DESIGN_STATUS_BAR' isn't a lowerCamelCase identifier - lib\core\utils\size_utils.dart:6:11 - constant_identifier_names
+   info - Unnecessary 'this.' qualifier - lib\core\utils\size_utils.dart:18:25 - unnecessary_this
+   info - Parameter 'key' could be a super parameter - lib\core\utils\size_utils.dart:36:9 - use_super_parameters
+   info - Constructors for public widgets should have a named 'key' parameter - lib\main.dart:18:7 - use_key_in_widget_constructors
+   info - Parameter 'key' could be a super parameter - lib\presentation\app_navigation_screen\app_navigation_screen.dart:7:9 - use_super_parameters
+   info - The private field _appNavigationModel could be 'final' - lib\presentation\app_navigation_screen\provider\app_navigation_provider.dart:10:22 - prefer_final_fields
+warning - The declaration '_onInitialize' isn't referenced - lib\presentation\app_navigation_screen\provider\app_navigation_provider.dart:15:8 - unused_element
+   info - Dangling library doc comment - lib\presentation\services_home_screen\models\services_home_model.dart:1:1 - dangling_library_doc_comments
+   info - Unnecessary override - lib\presentation\services_home_screen\provider\services_home_provider.dart:8:8 - unnecessary_overrides
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:20:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:27:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:62:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:69:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:74:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:79:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:84:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:89:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:94:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:99:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:104:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\presentation\services_home_screen\provider\services_home_provider.dart:109:5 - avoid_print
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\presentation\services_home_screen\services_home_screen.dart:9:3 - prefer_const_constructors_in_immutables
+   info - Parameter 'key' could be a super parameter - lib\presentation\services_home_screen\services_home_screen.dart:9:3 - use_super_parameters
+   info - Dangling library doc comment - lib\presentation\welcome_screen\models\welcome_model.dart:1:1 - dangling_library_doc_comments
+   info - Unnecessary override - lib\presentation\welcome_screen\provider\welcome_provider.dart:10:8 - unnecessary_overrides
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\presentation\welcome_screen\welcome_screen.dart:9:3 - prefer_const_constructors_in_immutables
+   info - Parameter 'key' could be a super parameter - lib\presentation\welcome_screen\welcome_screen.dart:9:3 - use_super_parameters
+   info - The private field _appTheme could be 'final' - lib\theme\theme_helper.dart:11:7 - prefer_final_fields
+   info - The private field _supportedCustomColor could be 'final' - lib\theme\theme_helper.dart:14:32 - prefer_final_fields
+   info - The private field _supportedColorScheme could be 'final' - lib\theme\theme_helper.dart:19:28 - prefer_final_fields
+   info - The variable name 'amber_A200' isn't a lowerCamelCase identifier - lib\theme\theme_helper.dart:51:13 - non_constant_identifier_names
+   info - The variable name 'white_A700' isn't a lowerCamelCase identifier - lib\theme\theme_helper.dart:52:13 - non_constant_identifier_names
+   info - The variable name 'yellow_A700' isn't a lowerCamelCase identifier - lib\theme\theme_helper.dart:53:13 - non_constant_identifier_names
+   info - The variable name 'pink_A200' isn't a lowerCamelCase identifier - lib\theme\theme_helper.dart:55:13 - non_constant_identifier_names
+   info - Use the end-of-line form ('///') for doc comments - lib\widgets\custom_gradient_button.dart:6:1 - slash_for_doc_comments
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\widgets\custom_gradient_button.dart:26:3 - prefer_const_constructors_in_immutables
+   info - Parameter 'key' could be a super parameter - lib\widgets\custom_gradient_button.dart:26:3 - use_super_parameters
+   info - Use the end-of-line form ('///') for doc comments - lib\widgets\custom_icon_button.dart:6:1 - slash_for_doc_comments
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\widgets\custom_icon_button.dart:22:3 - prefer_const_constructors_in_immutables
+   info - Parameter 'key' could be a super parameter - lib\widgets\custom_icon_button.dart:22:3 - use_super_parameters
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:11:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:11:36 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:12:11 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:16:16 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:18:16 - unnecessary_this
+warning - This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: CustomImageView.imagePath - lib\widgets\custom_image_view.dart:28:7 - must_be_immutable
+   info - Constructors for public widgets should have a named 'key' parameter - lib\widgets\custom_image_view.dart:29:3 - use_key_in_widget_constructors
+   info - Missing type annotation - lib\widgets\custom_image_view.dart:85:3 - strict_top_level_inference
+   info - Missing type annotation - lib\widgets\custom_image_view.dart:97:3 - strict_top_level_inference
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\widgets\custom_image_view.dart:111:16 - sized_box_for_whitespace
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:119:26 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:121:21 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:141:24 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\widgets\custom_image_view.dart:143:19 - unnecessary_this
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\widgets\custom_image_view.dart:155:42 - sized_box_for_whitespace
+
