@@ -4,12 +4,15 @@ import '../../widgets/custom_image_view.dart';
 import 'provider/preschool_otp_provider.dart';
 
 class PreschoolOtpScreen extends StatefulWidget {
-  const PreschoolOtpScreen({Key? key}) : super(key: key);
+  final Map<String, dynamic> arguments;
+  const PreschoolOtpScreen({Key? key, required this.arguments}) : super(key: key);
 
   static Widget builder(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+    Map<String, dynamic> arguments = args is Map<String, dynamic> ? args : {'email': '', 'otp': ''};
     return ChangeNotifierProvider(
       create: (context) => PreschoolOtpProvider(),
-      child: const PreschoolOtpScreen(),
+      child: PreschoolOtpScreen(arguments: arguments),
     );
   }
 
@@ -71,7 +74,7 @@ class _PreschoolOtpScreenState extends State<PreschoolOtpScreen> {
         children: [
           SizedBox(height: 260.v),
           Text(
-            'Please enter the code sent to your Mobile',
+            'Please enter the code sent to your Email',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.black,
@@ -92,7 +95,7 @@ class _PreschoolOtpScreenState extends State<PreschoolOtpScreen> {
           ),
           SizedBox(height: 10.v),
           Text(
-            '+91 84XXXXXX76', // Static for now, can be dynamic later
+            widget.arguments['email'], 
             textAlign: TextAlign.center,
             style: TextStyle(
               color: const Color(0xFF808080),
@@ -168,7 +171,7 @@ class _PreschoolOtpScreenState extends State<PreschoolOtpScreen> {
   Widget _buildConfirmButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<PreschoolOtpProvider>().onConfirmPressed(context);
+        context.read<PreschoolOtpProvider>().onConfirmPressed(context, widget.arguments);
       },
       child: Container(
         width: double.infinity,

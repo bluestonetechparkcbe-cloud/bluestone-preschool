@@ -4,12 +4,15 @@ import '../../widgets/custom_image_view.dart';
 import 'provider/preschool_login_provider.dart';
 
 class PreschoolLoginScreen extends StatefulWidget {
-  const PreschoolLoginScreen({Key? key}) : super(key: key);
+  final int selectedProgramId;
+  const PreschoolLoginScreen({Key? key, required this.selectedProgramId}) : super(key: key);
 
   static Widget builder(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+    int selectedId = args is int ? args : 0;
     return ChangeNotifierProvider(
       create: (context) => PreschoolLoginProvider(),
-      child: const PreschoolLoginScreen(),
+      child: PreschoolLoginScreen(selectedProgramId: selectedId),
     );
   }
 
@@ -118,7 +121,7 @@ class _PreschoolLoginScreenState extends State<PreschoolLoginScreen> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Phone number',
+              'Email Address',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.fSize,
@@ -128,7 +131,7 @@ class _PreschoolLoginScreenState extends State<PreschoolLoginScreen> {
             ),
           ),
           SizedBox(height: 6.v),
-          _buildPhoneNumberInput(context),
+          _buildEmailInput(context),
           SizedBox(height: 20.v),
           _buildGetOTPButton(context),
           SizedBox(height: 20.v),
@@ -141,7 +144,7 @@ class _PreschoolLoginScreenState extends State<PreschoolLoginScreen> {
     );
   }
 
-  Widget _buildPhoneNumberInput(BuildContext context) {
+  Widget _buildEmailInput(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 42.v,
@@ -153,12 +156,10 @@ class _PreschoolLoginScreenState extends State<PreschoolLoginScreen> {
       ),
       child: Align(
          alignment: Alignment.centerLeft,
-         // We should use a TextFormField here properly, but user code had a Text.
-         // Ill use a TextField.
          child: TextField(
-           controller: context.read<PreschoolLoginProvider>().phoneNumberController,
+           controller: context.read<PreschoolLoginProvider>().emailController,
            decoration: InputDecoration(
-             hintText: 'Enter your number',
+             hintText: 'Enter your email',
              hintStyle: TextStyle(
                 color: const Color(0xFF808080),
                 fontSize: 14.fSize,
@@ -169,7 +170,7 @@ class _PreschoolLoginScreenState extends State<PreschoolLoginScreen> {
              isDense: true,
              contentPadding: EdgeInsets.zero,
            ),
-           keyboardType: TextInputType.phone,
+           keyboardType: TextInputType.emailAddress,
            style: TextStyle(
              color: Colors.black,
              fontSize: 14.fSize,
@@ -182,35 +183,47 @@ class _PreschoolLoginScreenState extends State<PreschoolLoginScreen> {
   }
 
   Widget _buildGetOTPButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<PreschoolLoginProvider>().onGetOTPPressed(context);
-      },
-      child: Container(
-        width: double.infinity,
-        height: 42.v,
-        decoration: ShapeDecoration(
-          color: const Color(0xFF32B6F3),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.h)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Get OTP',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.fSize,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-              ),
+    return Consumer<PreschoolLoginProvider>(
+      builder: (context, provider, child) {
+        return GestureDetector(
+          onTap: provider.isLoading ? null : () {
+            provider.onGetOTPPressed(context, widget.selectedProgramId);
+          },
+          child: Container(
+            width: double.infinity,
+            height: 42.v,
+            decoration: ShapeDecoration(
+              color: const Color(0xFF32B6F3),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.h)),
             ),
-            SizedBox(width: 10.h),
-            Icon(Icons.arrow_forward, color: Colors.white, size: 20.adaptSize),
-          ],
-        ),
-      ),
+            child: Center(
+              child: provider.isLoading 
+                ? SizedBox(
+                    width: 24.adaptSize,
+                    height: 24.adaptSize,
+                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Get OTP',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.fSize,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: 10.h),
+                      Icon(Icons.arrow_forward, color: Colors.white, size: 20.adaptSize),
+                    ],
+                  ),
+            ),
+          ),
+        );
+      },
     );
   }
 

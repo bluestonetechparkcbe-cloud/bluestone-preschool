@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import '../../../core/app_export.dart';
+import '../../preschool_login_screen/preschool_login_screen.dart';
 
 class SelectProgramProvider extends ChangeNotifier {
-  void onProgramSelected(BuildContext context, String programName) {
-    // Handle program selection
-    // For now, maybe just print or navigate to next logical step (e.g., Login)
-    // Navigator.pushNamed(context, AppRoutes.loginScreen);
+  int? selectedProgramId;
+
+  void onProgramSelected(int id) {
+    selectedProgramId = id;
+    notifyListeners();
   }
 
   void onProceedToLogin(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.preschoolLoginScreen); 
+    if (selectedProgramId != null) {
+      Navigator.pushNamed(
+        context,
+        AppRoutes.preschoolLoginScreen,
+        arguments: selectedProgramId,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please select a program first")),
+      );
+    }
   }
 }

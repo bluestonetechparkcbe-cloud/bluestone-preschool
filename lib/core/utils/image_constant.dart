@@ -89,4 +89,13 @@ class ImageConstant {
   static String imgIconShopping = '${_basePath}img_icon_shopping.png';
   static String imgIconWellness = '${_basePath}img_icon_wellness.png';
   static String imgIconApps = '${_basePath}img_icon_apps.png';
+  
+  // Little Explorer Theme
+  static String imgCastle = '${_basePath}img_castle.png';
+  static String imgTree = '${_basePath}img_tree.png';
+  static String imgPalette = '${_basePath}img_palette.png';
+  static String imgMountain = '${_basePath}img_mountain.png';
+  static String imgRocket = '${_basePath}img_rocket.png';
+  static String imgGamepad = '${_basePath}img_gamepad.png';
+
 }

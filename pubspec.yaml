@@ -42,6 +42,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   dotted_border: ^3.1.0
+  postgres: ^3.0.0
+  mailer: ^6.6.0
 
 dev_dependencies:
   flutter_test:

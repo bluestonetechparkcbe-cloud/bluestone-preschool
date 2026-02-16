@@ -103,130 +103,151 @@ class _SelectProgramScreenState extends State<SelectProgramScreen> {
   }
 
   Widget _buildProgramList() {
-    return Column(
-      children: [
-        Row(
+    return Consumer<SelectProgramProvider>(
+      builder: (context, provider, child) {
+        return Column(
           children: [
-             Expanded(
-               child: _buildProgramCard(
-                title: 'NESTLERS',
-                subtitle: 'Playgroup (2 - 3 yrs)',
-                description: 'First steps into a world of sensory play',
-                color: const Color(0xFFBCE4CC),
-                iconPath: ImageConstant.imgTeddy,
-              ),
-             ),
-             SizedBox(width: 10.h),
-             Expanded(
-               child: _buildProgramCard(
-                title: 'BAMBINO',
-                subtitle: 'Playgroup (3 - 4 yrs)',
-                description: 'Build language, motor & social skills.',
-                color: const Color(0xFFF8C79F),
-                iconPath: ImageConstant.imgBlocks,
-              ),
-             ),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildProgramCard(
+                    id: 1,
+                    title: 'NESTLERS',
+                    subtitle: 'Playgroup (2 - 3 yrs)',
+                    description: 'First steps into a world of sensory play',
+                    color: const Color(0xFFBCE4CC),
+                    iconPath: ImageConstant.imgTeddy,
+                    isSelected: provider.selectedProgramId == 1,
+                    onTap: () => provider.onProgramSelected(1),
+                  ),
+                ),
+                SizedBox(width: 10.h),
+                Expanded(
+                  child: _buildProgramCard(
+                    id: 2,
+                    title: 'BAMBINO',
+                    subtitle: 'Playgroup (3 - 4 yrs)',
+                    description: 'Build language, motor & social skills.',
+                    color: const Color(0xFFF8C79F),
+                    iconPath: ImageConstant.imgBlocks,
+                    isSelected: provider.selectedProgramId == 2,
+                    onTap: () => provider.onProgramSelected(2),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.v),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildProgramCard(
+                    id: 3,
+                    title: 'B JUNIOR',
+                    subtitle: 'Playgroup (4 - 5 yrs)',
+                    description: 'Foundation for reading, writing & numbers',
+                    color: const Color(0xFFB6E4F3),
+                    iconPath: ImageConstant.imgBook,
+                    isSelected: provider.selectedProgramId == 3,
+                    onTap: () => provider.onProgramSelected(3),
+                  ),
+                ),
+                SizedBox(width: 10.h),
+                Expanded(
+                  child: _buildProgramCard(
+                    id: 4,
+                    title: 'B SENIOR',
+                    subtitle: 'Playgroup (5 - 6 yrs)',
+                    description: 'Kindergarten readiness & creative thinking',
+                    color: const Color(0xFFD6CFF8),
+                    iconPath: ImageConstant.imgBulb,
+                    isSelected: provider.selectedProgramId == 4,
+                    onTap: () => provider.onProgramSelected(4),
+                  ),
+                ),
+              ],
+            ),
           ],
-        ),
-        SizedBox(height: 10.v),
-        Row(
-          children: [
-             Expanded(
-               child: _buildProgramCard(
-                title: 'B JUNIOR',
-                subtitle: 'Playgroup (4 - 5 yrs)',
-                description: 'Foundation for reading, writing & numbers',
-                color: const Color(0xFFB6E4F3),
-                iconPath: ImageConstant.imgBook,
-              ),
-             ),
-             SizedBox(width: 10.h),
-             Expanded(
-               child: _buildProgramCard(
-                title: 'B SENIOR',
-                subtitle: 'Playgroup (5 - 6 yrs)',
-                description: 'Kindergarten readiness & creative thinking',
-                color: const Color(0xFFD6CFF8),
-                iconPath: ImageConstant.imgBulb,
-              ),
-             ),
-          ],
-        ),
-      ],
+        );
+      },
     );
   }
 
   Widget _buildProgramCard({
+    required int id,
     required String title,
     required String subtitle,
     required String description,
     required Color color,
     required String iconPath,
+    required bool isSelected,
+    required VoidCallback onTap,
   }) {
-    // Determine card height based on content or fixed height to match design
-    // Determine card height based on content or fixed height to match design
-    // User requested "fit height to content"
-    return Container(
-      // Height removed to wrap content, or use constraints
-      constraints: BoxConstraints(minHeight: 180.v),
-      padding: EdgeInsets.all(12.h),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12.h),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0x26000000),
-            blurRadius: 24,
-            offset: Offset(0, 8),
-          )
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15.fSize,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(height: 6.v),
-          Text(
-            subtitle,
-            style: TextStyle(
-              color: const Color(0xFF333333),
-              fontSize: 12.fSize,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(height: 8.v),
-          Text(
-            description,
-            style: TextStyle(
-              color: const Color(0xFF333333),
-              fontSize: 12.fSize,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(height: 10.v),
-          Row(
-            children: [
-              CustomImageView(
-                imagePath: iconPath,
-                height: 40.adaptSize,
-                width: 40.adaptSize,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        constraints: BoxConstraints(minHeight: 180.v),
+        padding: EdgeInsets.all(12.h),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(12.h),
+          border: isSelected
+              ? Border.all(color: Colors.blueAccent, width: 3)
+              : null,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x26000000),
+              blurRadius: 24,
+              offset: Offset(0, 8),
+            )
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15.fSize,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
               ),
-              SizedBox(width: 8.h),
-              _buildExploreButton(),
-            ],
-          ),
-        ],
+            ),
+            SizedBox(height: 6.v),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: const Color(0xFF333333),
+                fontSize: 12.fSize,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(height: 8.v),
+            Text(
+              description,
+              style: TextStyle(
+                color: const Color(0xFF333333),
+                fontSize: 12.fSize,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(height: 10.v),
+            Row(
+              children: [
+                CustomImageView(
+                  imagePath: iconPath,
+                  height: 40.adaptSize,
+                  width: 40.adaptSize,
+                ),
+                SizedBox(width: 8.h),
+                _buildExploreButton(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
