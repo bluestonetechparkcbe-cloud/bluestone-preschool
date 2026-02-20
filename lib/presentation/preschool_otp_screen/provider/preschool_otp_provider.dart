@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/app_export.dart';
+import '../../../../core/config/email_config.dart';
 import '../../../../db_helper.dart';
 
 class PreschoolOtpProvider extends ChangeNotifier {
@@ -36,7 +40,6 @@ class PreschoolOtpProvider extends ChangeNotifier {
         FocusScope.of(context).requestFocus(focusNodes[index + 1]);
       } else {
         focusNodes[index].unfocus();
-        // Auto-submit or verify could happen here
       }
     } else {
       if (index > 0) {
@@ -61,7 +64,29 @@ class PreschoolOtpProvider extends ChangeNotifier {
       bool exists = await DBHelper.verifyUser(email);
       
       if (exists) {
-        // Navigate to Home Screen
+        // Send Registration Alert
+        try {
+          final smtpServer = gmail(EmailConfig.senderEmail, EmailConfig.appPassword);
+          final message = Message()
+            ..from = Address(EmailConfig.senderEmail, 'Bluestone Preschool')
+            ..recipients.add(EmailConfig.senderEmail) // Send to Admin
+            ..subject = 'New Parent Registered'
+            ..text = 'New Parent Registered: $email';
+          
+          await send(message, smtpServer);
+          print("Registration Alert Sent");
+        } catch (e) {
+          print("Failed to send registration alert: $e");
+        }
+
+        // Save Session
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('user_email', email);
+        } catch (e) {
+          print("Failed to save session: $e");
+        }
+
         // Navigate to Home Screen
         Navigator.pushNamedAndRemoveUntil(
           context, 

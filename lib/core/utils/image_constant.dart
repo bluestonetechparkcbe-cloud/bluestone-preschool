@@ -52,6 +52,7 @@ class ImageConstant {
   static String imgLoginEducatorIcon = '${_basePath}img_login_educator_icon.png';
   static String imgLock = '${_basePath}img_lock.png';
   static String imgHomeBg = '${_basePath}img_home_bg.png';
+  static String imgHomeBackground = '${_basePath}img_home_background.png';
 
   // Preschool Menu Screen
   static String imgMenuProfile = '${_basePath}img_menu_profile.png';

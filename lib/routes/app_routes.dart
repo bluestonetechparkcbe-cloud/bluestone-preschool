@@ -17,6 +17,9 @@ import '../presentation/parent_hub_screen/parent_hub_screen.dart';
 import '../presentation/rewards_screen/rewards_screen.dart';
 import '../presentation/pay_fees_screen/pay_fees_screen.dart';
 import '../presentation/school_connect_screen/school_connect_screen.dart';
+import '../presentation/photo_gallery_screen/provider/preschool_gallery_provider.dart';
+import '../presentation/my_childs_day_screen/provider/my_childs_day_provider.dart'; // Added Provider Import
+import 'package:provider/provider.dart';
 
 class AppRoutes {
   static const String welcomeScreen = '/welcome_screen';
@@ -52,8 +55,14 @@ class AppRoutes {
     preschoolMenuScreen: PreschoolMenuScreen.builder,
     preschoolProfileScreen: PreschoolProfileScreen.builder,
     preschoolUpdatesScreen: PreschoolUpdatesScreen.builder,
-    photoGalleryScreen: (context) => const PhotoGalleryScreen(),
-    myChildsDayScreen: (context) => const MyChildsDayScreen(),
+    photoGalleryScreen: (context) => ChangeNotifierProvider(
+        create: (_) => PreschoolGalleryProvider(),
+        child: const PhotoGalleryScreen(),
+    ),
+    myChildsDayScreen: (context) => ChangeNotifierProvider(
+      create: (_) => MyChildsDayProvider(),
+      child: const MyChildsDayScreen(),
+    ),
     teacherNotesScreen: (context) => const TeacherNotesScreen(),
     parentHubScreen: ParentHubScreen.builder,
     rewardsScreen: RewardsScreen.builder,

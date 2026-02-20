@@ -69,4 +69,8 @@ class LightCodeColors {
   // Color Shades - Each shade has its own dedicated constant
   Color get grey200 => Colors.grey.shade200;
   Color get grey100 => Colors.grey.shade100;
+  
+  // Blue Shades
+  Color get blue50 => Colors.blue.shade50;
+  Color get blue500 => Colors.blue.shade500;
 }

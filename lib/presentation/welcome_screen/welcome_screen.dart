@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_gradient_button.dart';
 import '../../widgets/custom_image_view.dart';
 import './provider/welcome_provider.dart';
+import '../../db_helper.dart';
 
 class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -20,48 +21,108 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAutoLogin();
+  }
+
+  Future<void> _checkAutoLogin() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final email = prefs.getString('user_email');
+
+      if (email != null) {
+        // Log detected
+        print("LOG: Auto-login detected for $email");
+
+        // Sync Status
+        bool isVerified = await DBHelper.getVerificationStatus(email);
+        print("LOG: Verification Status: $isVerified");
+
+        if (mounted) {
+           Navigator.pushNamedAndRemoveUntil(
+             context, 
+             AppRoutes.preschoolHomeScreen, 
+             (route) => false,
+             arguments: {'email': email},
+           );
+           return;
+        }
+      }
+    } catch (e) {
+      print("Auto-login error: $e");
+    }
+
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<WelcomeProvider>(
-        builder: (context, provider, child) {
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFFFF2D7A),
-                            appTheme.pink_500,
-                            appTheme.orange_600,
-                          ],
-                          stops: [0.0, 0.5, 1.0],
-                        ),
+      body: Stack(
+        children: [
+          Consumer<WelcomeProvider>(
+            builder: (context, provider, child) {
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 60.h, left: 20.h, right: 20.h, bottom: 20.v),
-                        child: Column(
-                          children: [
-                            _buildDecorativeElementsSection(context),
-                            _buildMainContentSection(context),
-                          ],
+                      child: IntrinsicHeight(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xFFFF2D7A),
+                                appTheme.pink_500,
+                                appTheme.orange_600,
+                              ],
+                              stops: [0.0, 0.5, 1.0],
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 60.h, left: 20.h, right: 20.h, bottom: 20.v),
+                            child: Column(
+                              children: [
+                                _buildDecorativeElementsSection(context),
+                                _buildMainContentSection(context),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
             },
-          );
-        },
+          ),
+          if (_isLoading)
+            Container(
+              color: Colors.white,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(color: Colors.pink),
+                    SizedBox(height: 20),
+                    Text("Syncing User Data...", style: TextStyle(color: Colors.pink, fontSize: 16)),
+                  ],
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

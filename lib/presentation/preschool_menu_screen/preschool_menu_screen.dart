@@ -30,6 +30,14 @@ class _PreschoolMenuScreenState extends State<PreschoolMenuScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PreschoolMenuProvider>().loadMenuData();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -84,14 +92,18 @@ class _PreschoolMenuScreenState extends State<PreschoolMenuScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start, // Left align text block
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Lavanya Anbalagan",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.fSize,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Poppins',
-                          ),
+                        Consumer<PreschoolMenuProvider>(
+                          builder: (context, provider, child) {
+                            return Text(
+                              provider.studentName,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.fSize,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Poppins',
+                              ),
+                            );
+                          }
                         ),
                         SizedBox(height: 4.v),
                         // Number + Email
@@ -200,7 +212,7 @@ class _PreschoolMenuScreenState extends State<PreschoolMenuScreen> {
                           Text("Logout", style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: Colors.black)),
                           Spacer(),
                           Text(
-                            "Version",
+                            "v1.0.0",
                             style: TextStyle(color: Colors.grey, fontFamily: 'Poppins'),
                           )
                         ],

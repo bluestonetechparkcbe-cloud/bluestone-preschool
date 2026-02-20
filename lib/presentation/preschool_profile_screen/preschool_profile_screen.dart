@@ -19,6 +19,14 @@ class PreschoolProfileScreen extends StatefulWidget {
 
 class PreschoolProfileScreenState extends State<PreschoolProfileScreen> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PreschoolProfileProvider>().loadProfileData();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -105,29 +113,35 @@ class PreschoolProfileScreenState extends State<PreschoolProfileScreen> {
 
                     SizedBox(height: 12.v),
 
-                    Text(
-                      "Lavanya Anbalagan",
-                      style:
-                          TextStyle(fontSize: 22.fSize, fontWeight: FontWeight.w700, fontFamily: 'Poppins'),
+                    Consumer<PreschoolProfileProvider>(
+                      builder: (context, provider, child) {
+                        final model = provider.preschoolProfileModelObj;
+                        return Column(
+                          children: [
+                            Text(
+                              model.studentName.isNotEmpty ? model.studentName : "Loading...",
+                              style: TextStyle(fontSize: 22.fSize, fontWeight: FontWeight.w700, fontFamily: 'Poppins'),
+                            ),
+                            SizedBox(height: 4.v),
+                            Text(
+                              "Nestler", // Keeping static as requested logic didn't specify dynamic school name
+                              style: TextStyle(color: Colors.grey, fontSize: 14.fSize, fontFamily: 'Poppins'),
+                            ),
+                            SizedBox(height: 24.v),
+
+                            _infoTile("UIN", model.uin, Icons.credit_card),
+                            _infoTile("Grade", model.grade, Icons.grade), // Added Grade
+                            _infoTile("Gender", model.gender, Icons.female), // Icon might need logic based on gender but sticking to female for now or generic person
+                            _infoTile(
+                                "Father",
+                                "${model.fatherName}\n${model.fatherEmail}\n${model.fatherPhone}", Icons.family_restroom),
+                            _infoTile(
+                                "Mother",
+                                "${model.motherName}\n${model.motherEmail}\n${model.motherPhone}", Icons.family_restroom),
+                          ],
+                        );
+                      }
                     ),
-
-                    SizedBox(height: 4.v),
-
-                    Text(
-                      "Nestler",
-                      style: TextStyle(color: Colors.grey, fontSize: 14.fSize, fontFamily: 'Poppins'),
-                    ),
-
-                    SizedBox(height: 24.v),
-
-                    _infoTile("UIN", "EK/1746/0044/2526", Icons.credit_card),
-                    _infoTile("Gender", "Female", Icons.female),
-                    _infoTile(
-                        "Father",
-                        "Anbalagan S\nanbalagansankar@gmail.com\n9597884087", Icons.family_restroom),
-                    _infoTile(
-                        "Mother",
-                        "Nagavalli K\nnagavallianbalagan@gmail.com\n9626699665", Icons.family_restroom),
                   ],
                 ),
               ),
